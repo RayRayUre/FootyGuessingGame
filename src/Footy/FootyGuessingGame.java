@@ -2,21 +2,23 @@ package Footy;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
+import java.util.Scanner;   //All the utilities that I need
 
 public class FootyGuessingGame {
-    
+
+    //sets all the variables 
     int guessCount = 0;
-    String answer;
-    boolean gameOn = false;
-    
+
     public static void main(String[] args) {
-        int guessCount = 0;
-        String answer;
+
+        String answer; //sets a string for getting the answer from the user
+        Scanner stringScan = new Scanner(System.in); //sets up a new Scanner for user input
+        boolean gameOn = false;
+        boolean teamPicked = false;
+
+        ArrayList teams = new ArrayList();      //makes a list array of all the possible teams
         
-        ArrayList teams = new ArrayList();
         teams.add("Arsenal");
-        teams.add("Tottenham");
         teams.add("Chelsea");
         teams.add("Liverpool");
         teams.add("Manchester United");
@@ -29,40 +31,206 @@ public class FootyGuessingGame {
         teams.add("Lyon");
         teams.add("Marseille");
         teams.add("Bayern Munich");
-        teams.add("Borussia Dortmund");
         teams.add("Bayer Leverkusen");
         teams.add("Ajax");
-        teams.add("Benfica");
-        Iterator checkTeams = teams.iterator();
-        Scanner stringScan = new Scanner(System.in);
+
+        Iterator checkTeams = teams.iterator(); //used to list the teams to used from
+
         System.out.println("In a moment, I will give you a list of soccer teams \n"
                 + "to choose from, and I will guess which one you picked based \n"
                 + "on a series of questions that I ask you. There is one \n"
                 + "condition though. You have to answer either yes or no. Ready?");
-        System.out.println("Pick a team:");
-        while (checkTeams.hasNext()) {
-            
-            System.out.println(checkTeams.next());
-            
-        }
-        System.out.println("Do you have your team?");
         answer = stringScan.nextLine();
+
         if (answer.contains("yes") || answer.startsWith("y")) {
-            boolean gameOn = true;
+            gameOn = true;
+        }
+
+        if (answer.contains("no") || answer.startsWith("n")) {
+            System.out.println("Your decision making skills are bad...\n"
+                    + "...and you should feel bad.\n"
+                    + "When you are ready, say yes.");
+            answer = stringScan.nextLine();
+
+            if (answer.contains("yes") || answer.startsWith("y")) {
+                gameOn = true;
+            }
+        }
+
+        //MAIN GAME LOOP
+        while (gameOn == true) {
+            System.out.println("\n"
+                    + "Pick a team:");
+
+            //loop for listing all the teams
+            while (checkTeams.hasNext()) {
+
+                System.out.println(checkTeams.next());
+
+            }
+
+            System.out.println("Do you have your team?");
+            answer = stringScan.nextLine();
+
+            if (answer.contains("yes") || answer.startsWith("y")) {
+
+                teamPicked = true;
+                gameOn = false;
+
+            }
+
+            if (answer.contains("no") || answer.startsWith("n")) {
+                System.out.println("\n"
+                        + "Stop trying to screw with me!\n"
+                        + "When you have picked a team, say yes.");
+                answer = stringScan.nextLine();
+
+                if (answer.contains("yes") || answer.startsWith("y")) {
+                    teamPicked = true;
+                    gameOn = false;
+                }
+            }
+        }
+        while (teamPicked == true) {
             System.out.println("Sweet!\n"
+                    + "\n"
                     + "Has your team won the modern installation of the Champions League (1993-present)?");
             answer = stringScan.nextLine();
+
             if (answer.contains("yes") || answer.startsWith("y")) {
-                
+
                 teams.remove("Arsenal");
                 teams.remove("Manchester City");
-                teams.remove("Tottenham");
                 teams.remove("Lyon");
-                teams.remove("Benfica");
                 teams.remove("Bayer Leverkusen");
                 teams.remove("Chelsea");
-                
-            } else {
+                System.out.println(teams);
+                System.out.println("Have they won it more than once?");
+                answer = stringScan.nextLine();
+
+                if (answer.contains("yes") || answer.startsWith("y")) {
+
+                    teams.remove("Liverpool");
+                    teams.remove("Marseille");
+                    teams.remove("Inter");
+                    teams.remove("Juventus");
+                    teams.remove("Bayern Munich");
+                    teams.remove("Ajax");
+                    System.out.println(teams);
+                    System.out.println("Is the city they play in the Capital of its respective country?");
+                    answer = stringScan.nextLine();
+                    
+                    if (answer.contains("yes") || answer.startsWith("y")){
+                        teams.remove("Barcelona");
+                        teams.remove("Manchester United");
+                        teams.remove("AC Milan");
+                        System.out.println("Is your team " + teams + "?");
+                        
+                    } //FOUND REAL MADRID
+                    
+                    if (answer.contains("no") || answer.startsWith("n")){
+                        teams.remove("Real Madrid");
+                        System.out.println("Was the country your teams plays in one of the Axis Powers in World War II?");
+                        answer = stringScan.nextLine();
+                        
+                        if (answer.contains("yes") || answer.startsWith("y")){
+                            teams.remove("Barcelona");
+                            teams.remove("Manchester United");
+                            System.out.println("Is your team " + teams + "?");
+                            
+                        }   //FOUND AC MILAN
+                        
+                        if (answer.contains("no") || answer.startsWith("n")){
+                            teams.remove("AC Milan");
+                            System.out.println("Does your team primarily play in England?");
+                            answer = stringScan.nextLine();
+                            
+                            if (answer.contains("yes") || answer.startsWith("y")){
+                                teams.remove("Barcelona");
+                                System.out.println("Is your team " + teams + "?");
+                            }   // FOUND MANCHESTER UNITED
+                            
+                            if (answer.contains("no") || answer.startsWith("n")){
+                                teams.remove("Manchester United");
+                                System.out.println("Is your team " + teams + "?");
+                            }   //FOUND BARCELONA
+                        }
+                    }
+                }
+                if (answer.contains("no") || answer.startsWith("n")) {
+                    
+                    teams.remove("Barcelona");
+                    teams.remove("Manchester United");
+                    teams.remove("Real Madrid");
+                    teams.remove("AC Milan");
+                    System.out.println(teams);
+                    System.out.println("Does your team's crest have an animal on it?");
+                    
+                    if (answer.contains("yes") || answer.startsWith("y")){
+                        
+                        teams.remove("Marseille");
+                        teams.remove("Inter");
+                        teams.remove("Bayern Munich");
+                        System.out.println("Was the country your teams plays in one of the Axis Powers in World War II?");
+                        answer = stringScan.nextLine();
+                        
+                        if (answer.contains("yes") || answer.startsWith("y")){
+                            teams.remove("Liverpool");
+                            System.out.println("Is your team " + teams + "?");
+                        }   //FOUND JUVENTUS
+                        
+                        if (answer.contains("no") || answer.startsWith("n")){
+                            teams.remove("Juventus");
+                            System.out.println("Is your team " + teams + "?");
+                        } //FOUND LIVERPOOL
+                        
+                    }
+                    if (answer.contains("no") || answer.startsWith("n")){
+                        
+                        teams.remove("Liverpool");
+                        teams.remove("Juventus");
+                        System.out.println("Was the country your teams plays in one of the Axis Powers in World War II?");
+                        answer = stringScan.nextLine();
+                        
+                        if (answer.contains("yes") || answer.startsWith("y")){
+                            teams.remove("Marseille");
+                            teams.remove("Ajax");
+                            System.out.println("Is the language that they speak in your teams country traditionally thought of as unpleasant?");
+                            answer = stringScan.nextLine();
+                            
+                            if (answer.contains("yes") || answer.startsWith("y")){
+                                teams.remove("Inter");
+                                System.out.println("Is your team " + teams + "?");
+                            }   //FOUND BAYERN MUNICH
+                            
+                            if (answer.contains("no") || answer.startsWith("n")){
+                                teams.remove("Bayern Munich");
+                                System.out.println("Is your team " + teams + "?");
+                            }   //FOUND INTER
+                            
+                        }
+                        
+                        if (answer.contains("no") || answer.startsWith("n")){
+                            teams.remove("Bayern Munich");
+                            teams.remove("Inter");
+                            System.out.println("Is the country your teams plays in famous for their wooden shoes called clogs?");
+                            answer = stringScan.nextLine();
+                            
+                            if (answer.contains("yes") || answer.startsWith("y")){
+                                teams.remove("Marseille");
+                                System.out.println("Is your team " + teams + "?");
+                            }   //FOUND AJAX
+                            
+                            if (answer.contains("no") || answer.startsWith("n")){
+                                teams.remove("Ajax");
+                                System.out.println("Is your team" + teams + "?");
+                            }   //FOUND MARSEILLE
+                        }
+                    }
+                }   
+            }
+
+            if (answer.contains("no") || answer.startsWith("n")) {
                 teams.remove("Liverpool");
                 teams.remove("Manchester United");
                 teams.remove("Barcelona");
@@ -74,15 +242,61 @@ public class FootyGuessingGame {
                 teams.remove("Bayern Munich");
                 teams.remove("Borussia Dortmund");
                 teams.remove("Ajax");
+                System.out.println("Was the country that your team plays in one of the Axis Powers in World War II");
+                answer = stringScan.nextLine();
+                
+                if (answer.contains("yes") || answer.startsWith("y")){
+                    teams.remove("Arsenal");
+                    teams.remove("Manchester City");
+                    teams.remove("Lyon");
+                    System.out.println("Is your team " + teams + "?");
+                }   //FOUND BAYER LEVERKUSEN
+                
+                if (answer.contains("no") || answer.startsWith("n")){
+                    teams.remove("Bayer Leverkusen");
+                    System.out.println("Does your team's crest have an animal on it?");
+                    answer = stringScan.nextLine();
+                    
+                    if (answer.contains("yes") || answer.startsWith("y")){
+                        teams.remove("Arsenal");
+                        System.out.println("Is that animal an eagle or some kind of bird?");
+                        answer = stringScan.nextLine();
+                        
+                        if (answer.contains("yes") || answer.startsWith("y")){
+                            teams.remove("Lyon");
+                            System.out.println("Is your team " + teams + "?");
+                        }//FOUND MANCHESTER CITY
+                        
+                        if (answer.contains("no") || answer.startsWith("n")){
+                            teams.remove("Manchester City");
+                            System.out.println("Does your team play primarily in England?");
+                            answer = stringScan.nextLine();
+                            
+                            if (answer.contains("yes") || answer.startsWith("y")){
+                                teams.remove("Lyon");
+                                System.out.println("Is your team " + teams + "?");
+                            }   //FOUND CHELSEA
+                            
+                            if (answer.contains("no") || answer.startsWith("n")){
+                                teams.remove("Chelsea");
+                                System.out.println("Is your team" + teams + "?");
+                            }   //FOUND LYON
+                        }
+                       
+                    }
+                    
+                    if (answer.contains("no") || answer.startsWith("n")){
+                        teams.remove("Lyon");
+                        teams.remove("Manchester City");
+                        teams.remove("Chelsea");
+                        System.out.println("Is your team " + teams + "?");
+                    } //FOUND ARSENAL
+                }
             }
-        }
-        
-        checkTeams = teams.iterator();
-        
-        while (checkTeams.hasNext()) {
-            
-            System.out.println(checkTeams.next());
-            
         }
     }
 }
+
+// Still need to make a replay option
+// Need to reset the array to its original state at end of game if the guess is correct
+// 
